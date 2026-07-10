@@ -8,12 +8,9 @@
     <link rel="icon" type="image/svg+xml" href="/img/icons/svg/check-double-solid_dark.svg">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta name="description" content="CheckDev - пробные собеседования в IT.">
     <title>Главная</title>
 
-    <!-- Required meta tags -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- fontawesome-free-6.3.0-web -->
     <link th:href="@{/webjars/font-awesome/6.3.0/css/all.min.css}" rel="stylesheet">
     <!-- Bootstrap 5.3.2 -->
@@ -36,18 +33,18 @@
             var itemId = element.getAttribute('data-item-id');
             $('#delete_dialog').modal('show');
             $('#delete_dialog').attr('data-item-id', itemId);
-            $('#confirmDeleteButton').on('click', function() {
+            $('#confirmDeleteButton').on('click', function () {
                 deleteItem(itemId);
             });
         }
 
         function deleteItem(itemId) {
             $.ajax({
-                 type: 'DELETE',
-                 url: '/statistic/delete/' + itemId,
-                 success: function () {
-                        location.reload();
-                     }
+                type: 'DELETE',
+                url: '/statistic/delete/' + itemId,
+                success: function () {
+                    location.reload();
+                }
             });
         }
     </script>
@@ -183,7 +180,11 @@
                                         <i class="far fa-clock pl-3"></i>
                                         <span th:text="${#strings.substring(interview.createDate, 0, 10)}"></span>
                                         <i class="far fa-user pl-3"></i>
-                                        <span th:text="${authService.findById(interview.submitterId).username}"></span>
+                                        <a class="text-decoration-none text-muted"
+                                           th:if="${authors.containsKey(interview.submitterId)}"
+                                           th:href="@{|/profiles/${authors.get(interview.submitterId).id}|}">
+                                            <span th:text="${authors.get(interview.submitterId).username}"></span>
+                                        </a>
                                         <i class="fa fa-comments pl-3" aria-hidden="true"></i>
                                         <span>Откликов:</span>
                                         <span th:text="${interview.countWishers}"></span>
